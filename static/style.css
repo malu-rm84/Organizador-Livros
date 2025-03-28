@@ -1,0 +1,45 @@
+body {
+    background-color: #f8f9fa;
+    padding-bottom: 50px;
+}
+
+.synopsis-text {
+    text-align: justify;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+.synopsis-box {
+    background-color: #f1f1f1;
+    padding: 15px;
+    border-radius: 5px;
+    border-left: 4px solid #0dcaf0;
+}
+
+.table th {
+    background-color: #212529;
+    color: white;
+    position: sticky;
+    top: 0;
+}
+
+.table-responsive {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+@media (max-width: 768px) {
+    .table-responsive {
+        font-size: 0.9rem;
+    }
+    
+    .btn {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.8rem;
+    }
+}

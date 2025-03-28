@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Adicionar Livro{% endblock %}
+
+{% block content %}
+    <h2 class="mb-4">Adicionar Novo Livro</h2>
+    
+    <form method="POST" action="{{ url_for('adicionar') }}">
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <label for="titulo" class="form-label">Título do Livro*</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="titulo" name="titulo" value="{{ titulo or '' }}" required>
+                    <button class="btn btn-outline-primary" type="submit" formaction="{{ url_for('buscar_info') }}">
+                        <i class="bi bi-search"></i> Buscar Informações
+                    </button>
+                </div>
+                <small class="text-muted">Digite o título para buscar informações automaticamente na OpenLibrary</small>
+                {% if not capa and request.method == 'POST' and 'buscar' in request.form %}
+                    <div class="alert alert-warning mt-2">
+                        Nenhuma informação encontrada para este título. Preencha os campos manualmente.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        {% if capa %}
+        <div class="row mb-3">
+            <div class="col-md-2">
+                <img src="{{ capa }}" class="img-thumbnail" alt="Capa do livro" style="max-height: 150px;">
+                <input type="hidden" name="capa" value="{{ capa }}">
+            </div>
+            <div class="col-md-10">
+        {% else %}
+        <div class="row">
+            <div class="col-md-12">
+        {% endif %}
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="autor" class="form-label">Autor</label>
+                        <input type="text" class="form-control" id="autor" name="autor" value="{{ autor or '' }}">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="generos" class="form-label">Gêneros</label>
+                        <input type="text" class="form-control" id="generos" name="generos" value="{{ generos or '' }}" placeholder="Ex: Ficção, Aventura">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="paginas" class="form-label">Páginas</label>
+                        <input type="number" class="form-control" id="paginas" name="paginas" value="{{ paginas or '' }}" min="1">
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="sinopse" class="form-label">Sinopse</label>
+                    <textarea class="form-control" id="sinopse" name="sinopse" rows="5">{{ sinopse or '' }}</textarea>
+                </div>
+            </div>
+        </div>
+        
+        <div class="d-flex justify-content-between">
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Cancelar
+            </a>
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-save"></i> Salvar Livro
+            </button>
+        </div>
+    </form>
+{% endblock %}

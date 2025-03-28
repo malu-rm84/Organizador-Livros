@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Meus Livros{% endblock %}
+
+{% block content %}
+    <h1 class="text-center mb-4">📚 Meu Organizador de Leituras</h1>
+    
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <a href="{{ url_for('adicionar') }}" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Adicionar Livro
+            </a>
+        </div>
+        <div class="col-md-6">
+            <form method="get" action="{{ url_for('index') }}">
+                <div class="input-group">
+                    <input type="text" name="busca" class="form-control" placeholder="Buscar livros..." value="{{ busca }}">
+                    <button class="btn btn-outline-secondary" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Livro</th>
+                    <th>Autor</th>
+                    <th>Gêneros</th>
+                    <th>Páginas</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for livro in livros %}
+                    <tr>
+                        <td>{{ livro['id'] }}</td>
+                        <td>{{ livro['titulo'] }}</td>
+                        <td>{{ livro['autor'] if livro['autor'] else '-' }}</td>
+                        <td>{{ livro['generos'] if livro['generos'] else '-' }}</td>
+                        <td>{{ livro['paginas'] if livro['paginas'] else '-' }}</td>
+                        <td>
+                            <a href="{{ url_for('detalhes', id=livro['id']) }}" class="btn btn-sm btn-info me-1">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <a href="{{ url_for('excluir', id=livro['id']) }}" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir este livro?')">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center py-4 text-muted">
+                            Nenhum livro encontrado. Adicione seu primeiro livro!
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

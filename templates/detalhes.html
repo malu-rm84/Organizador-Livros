@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}{{ livro['titulo'] }}{% endblock %}
+
+{% block content %}
+    <h2 class="mb-4">{{ livro['titulo'] }}</h2>
+    
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <p><strong><i class="bi bi-person"></i> Autor:</strong> {{ livro['autor'] if livro['autor'] else 'Não informado' }}</p>
+            <p><strong><i class="bi bi-tags"></i> Gêneros:</strong> {{ livro['generos'] if livro['generos'] else 'Não informado' }}</p>
+        </div>
+        <div class="col-md-6">
+            <p><strong><i class="bi bi-file-text"></i> Páginas:</strong> {{ livro['paginas'] if livro['paginas'] else 'Não informado' }}</p>
+            <p><strong><i class="bi bi-calendar"></i> Adicionado em:</strong> {{ livro['data_adicao'] }}</p>
+        </div>
+    </div>
+    
+    <div class="mb-4">
+        <h5><i class="bi bi-card-text"></i> Sinopse</h5>
+        <div class="synopsis-box">
+            <p class="synopsis-text">{{ livro['sinopse'] if livro['sinopse'] else 'Sinopse não disponível.' }}</p>
+        </div>
+    </div>
+    
+    <form method="POST">
+        <div class="mb-4">
+            <h5><i class="bi bi-pencil"></i> Minhas Anotações</h5>
+            <textarea class="form-control" name="anotacoes" rows="5">{{ livro['anotacoes'] if livro['anotacoes'] else '' }}</textarea>
+        </div>
+        
+        <div class="d-flex justify-content-between">
+            <a href="{{ url_for('excluir', id=livro['id']) }}" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este livro?')">
+                <i class="bi bi-trash"></i> Excluir
+            </a>
+            <div>
+                <a href="{{ url_for('index') }}" class="btn btn-secondary me-2">
+                    <i class="bi bi-arrow-left"></i> Voltar
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-save"></i> Salvar Anotações
+                </button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
